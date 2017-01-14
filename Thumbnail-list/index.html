@@ -1,0 +1,78 @@
+<head>
+	<script src="https://unpkg.com/react@latest/dist/react.js"></script>
+	<script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+
+  </div>
+</body>
+
+<script type="text/jsx">
+	//define a component class
+
+	var Badge = React.createClass({
+		render: function(){
+
+		return <div>
+		<button className="btn btn-primary" type="button">
+{this.props.title}<span className="badge">{this.props.number}</span>
+</button>
+		</div>
+		}
+
+	});
+
+var Thumbnail = React.createClass({
+	render: function(){
+		return <div className="col-sm-6">
+			 <div className="thumbnail">
+	      <img src={this.props.imageURL} />
+	      <div className="caption">
+	        <h3>{this.props.header}</h3>
+	        <p>{this.props.description}</p>
+	        <p>
+						<Badge title ={this.props.title} number = {this.props.number}/>
+					</p>
+      	</div>
+    	</div>
+		</div>
+	}
+});
+
+var ThumbnailList = React.createClass({
+	render: function() {
+			var list = this.props.thumbnailData.map(function(thumbnailProps){
+				return <Thumbnail {...thumbnailProps} />
+		});
+		return <div>
+			{list}
+			</div>
+		}
+});
+
+var options = {
+	thumbnailData : [{
+		title: 'Tutorials',
+		number: 42,
+		header: 'Learn React',
+		description: 'Learning React is the bees knees. By the end of this course you will be able to build things beyond your wildest dreams haha',
+		imageURL: 'http://coenraets.org/present/react/img/react.png'
+	},{
+		title: 'Tutorials',
+		number: 25,
+		header: 'Learn Gulp',
+		description: 'Gulp will speed up your workflow dog.',
+		imageURL: 'https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png'
+	}]
+};
+	//request render
+	var element = React.createElement(ThumbnailList, options);
+
+	//tell react where to place rendered element
+	ReactDOM.render(element, document.querySelector('.container'))
+
+
+</script>
